@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Load raw data
-input_path = "data/raw/finance_raw.csv"
-output_path = "data/processed/finance_clean.csv"
+input_path = "../data/raw/finance_raw.csv" # Since this was inside script folder, we go back two levels to reach data folder => ../ 
+output_path = "../data/processed/finance_clean.csv"
 
 df = pd.read_csv(input_path)
 
