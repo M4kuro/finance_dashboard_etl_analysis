@@ -11,6 +11,11 @@ before meaningful analysis can be performed.
 ## Data Pipeline
 1. Raw finance data ingestion
 2. Data cleaning and standardization with Python
+    - Standardized column names
+    - Handled missing growth rate values
+    - Calculated profit from revenue and profit margin
+    - Selected finance-relevant fields
+
 3. Export of processed datasets
 4. Visualization in Power BI
 
@@ -28,4 +33,6 @@ before meaningful analysis can be performed.
 
 ## Output
 - Cleaned finance dataset
+- Processed dataset: data/processed/finance_clean.csv
 - Interactive Power BI dashboard
+
