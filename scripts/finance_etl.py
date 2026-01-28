@@ -17,8 +17,21 @@ df.columns = (
 # Handle missing values
 df["growthrate"] = df["growthrate"].fillna(0)
 
-# Create profit column
+# 1. Ensure profitmargin is numeric
+df["profitmargin"] = pd.to_numeric(df["profitmargin"], errors="coerce")
+
+# 2. If profitmargin looks like whole percentages (e.g. 553 = 5.53%)
+# assume values above 100 are scaled incorrectly
+df.loc[df["profitmargin"].abs() > 100, "profitmargin"] = (
+    df.loc[df["profitmargin"].abs() > 100, "profitmargin"] / 100
+)
+
+# 3. Cap profit margin to realistic bounds
+df["profitmargin"] = df["profitmargin"].clip(lower=-50, upper=50)
+
+# 4. Recalculate profit (Revenue is already in millions)
 df["profit"] = df["revenue"] * (df["profitmargin"] / 100)
+
 
 # Select relevant columns
 df_clean = df[
@@ -49,3 +62,5 @@ df_clean = df_clean.rename(columns={
 df_clean.to_csv(output_path, index=False)
 
 print("Finance ETL completed successfully.")
+
+print(df[["revenue", "profitmargin", "profit"]].describe())
